@@ -1,52 +1,38 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+# Zomato Data Analysis and Visualization
 
-#Reading and coverting csv file in dataframes.
-dataframe = pd.read_csv("Zomato Data.csv")
-print(dataframe.head())
+This project explores and visualizes Zomato restaurant data to uncover insights into customer preferences, popular cuisines, pricing trends, and location-based patterns.
 
-def handleRate(value):
-    value=str(value).split('/')
-    value=value[0]
-    return float(value)
+## 📌 Objectives
 
-dataframe['rate']=dataframe['rate'].apply(handleRate)
-print(dataframe.head())
+- Clean and preprocess the Zomato dataset
+- Perform exploratory data analysis (EDA)
+- Visualize data to identify trends in ratings, costs, cuisines, and locations
+- Analyze user behavior for online orders and table bookings
 
-dataframe.info()
+## 📊 Tools and Libraries
 
-sns.countplot(x=dataframe['listed_in(type)'])
-plt.xlabel("Type of restaurant")
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Seaborn
+- Jupyter Notebook
 
-grouped_data = dataframe.groupby('listed_in(type)')['votes'].sum()
-result = pd.DataFrame({'votes': grouped_data})
-plt.plot(result, c='green', marker='o')
-plt.xlabel('Type of restaurant', c='red', size=20)
-plt.ylabel('Votes', c='red', size=20)
+## 📁 Dataset
 
-max_votes = dataframe['votes'].max()
-restaurant_with_max_votes = dataframe.loc[dataframe['votes'] == max_votes, 'name']
+The dataset includes details such as:
+- Restaurant Name
+- Location
+- Cuisine
+- Rating/ Votes
+- Average Cost for Two
+- Online Order & Table Booking Availability
 
-print('Restaurant(s) with the maximum votes:')
-print(restaurant_with_max_votes)
+> Dataset Source: [Kaggle](https://www.kaggle.com/datasets) or publicly available Zomato dataset.
 
-sns.countplot(x=dataframe['online_order'])
+## 📈 Key Insights
 
-plt.hist(dataframe['rate'],bins=5)
-plt.title('Ratings Distribution')
-plt.show()
-
-couple_data=dataframe['approx_cost(for two people)']
-sns.countplot(x=couple_data)
-
-plt.figure(figsize = (6,6))
-sns.boxplot(x = 'online_order', y = 'rate', data = dataframe)
-
-pivot_table = dataframe.pivot_table(index='listed_in(type)', columns='online_order', aggfunc='size', fill_value=0)
-sns.heatmap(pivot_table, annot=True, cmap='YlGnBu', fmt='d')
-plt.title('Heatmap')
-plt.xlabel('Online Order')
-plt.ylabel('Listed In (Type)')
-plt.show()
+- Most popular cuisines and restaurants by location
+- Average cost trends across cities
+- Rating distribution and its relation to service features
+- Online order and table booking preference
